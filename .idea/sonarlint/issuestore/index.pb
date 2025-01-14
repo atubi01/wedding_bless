@@ -38,3 +38,5 @@ J
 0node_modules/@firebase/firestore/dist/index.d.ts,f\4\f419e9c89ed9558359f1149fc125a25f07813c7a
 K
 src/components/Dashboard.js,c\5\c519608bdb15e1034574a8e20c9eb465d11ceaf4
+M
+src/components/PaymentStep.js,f\5\f5ef8e48d8a1fdea177022cb8ab8ed3c3d0da179

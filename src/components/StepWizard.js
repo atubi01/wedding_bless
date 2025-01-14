@@ -1,9 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { WizardSteps } from '../data/wizardSteps';
 import { handleSubmission } from '../utils/firebaseUtils';
+import { AlertTriangle } from 'lucide-react';
+
+const ConfirmationDialog = ({ isOpen, onClose, onConfirm }) => {
+  if (!isOpen) return null;
+
+  return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
+          <AlertTriangle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            התשלום טרם הושלם. האם ברצונך להמשיך בכל זאת?
+          </h3>
+          <div className="flex justify-center space-x-4 space-x-reverse">
+            <button
+                onClick={() => {
+                  onConfirm();
+                  onClose();
+                }}
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+            >
+              כן
+            </button>
+            <button
+                onClick={onClose}
+                className="px-4 py-2 bg-rose-500 text-white rounded hover:bg-rose-600 transition-colors"
+            >
+              לא
+            </button>
+          </div>
+        </div>
+      </div>
+  );
+};
 
 const StepWizard = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [formData, setFormData] = useState(() => {
     try {
       const savedData = localStorage.getItem('wizardFormData');
@@ -12,7 +47,7 @@ const StepWizard = () => {
         name: parsedData.name || '',
         address: parsedData.address || '',
         text: parsedData.text || '',
-        picture: null // Don't store picture in localStorage
+        picture: null
       };
     } catch (error) {
       console.error('Error loading from localStorage:', error);
@@ -29,7 +64,6 @@ const StepWizard = () => {
 
   useEffect(() => {
     try {
-      // Store only text fields, not the picture
       const storageData = {
         name: formData.name,
         address: formData.address,
@@ -40,11 +74,11 @@ const StepWizard = () => {
       console.error('Error saving to localStorage:', error);
     }
   }, [formData.name, formData.address, formData.text]);
+
   const handleImageCapture = (imageUrl) => {
     setFormData(prev => ({ ...prev, picture: imageUrl }));
   };
 
-  // Update handleSubmit function
   const handleSubmit = async () => {
     if (!formData.name || !formData.address || !formData.text) {
       setSubmissionStatus({
@@ -78,6 +112,12 @@ const StepWizard = () => {
   };
 
   const nextStep = () => {
+    // Check if this is the payment step and payment is not completed
+    if (currentStep === 1 && !paymentCompleted) { // Assuming payment is step 2 (index 1)
+      setShowConfirmDialog(true);
+      return;
+    }
+
     if (currentStep < WizardSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
@@ -92,7 +132,8 @@ const StepWizard = () => {
   const stepProps = {
     onImageCapture: handleImageCapture,
     formData,
-    setFormData
+    setFormData,
+    setPaymentCompleted: (value) => setPaymentCompleted(value)
   };
 
   const renderNavigationButtons = () => {
@@ -193,6 +234,14 @@ const StepWizard = () => {
               {submissionStatus.message}
             </div>
         )}
+
+        <ConfirmationDialog
+            isOpen={showConfirmDialog}
+            onClose={() => setShowConfirmDialog(false)}
+            onConfirm={() => {
+              setCurrentStep(currentStep + 1);
+            }}
+        />
       </div>
   );
 };

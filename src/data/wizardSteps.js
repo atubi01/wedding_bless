@@ -1,8 +1,9 @@
 import React from 'react';
-import { QrCode, Type, Heart, Camera } from 'lucide-react';
+import { Type, Heart, Camera } from 'lucide-react';
 import CameraStep from '../components/CameraStep';
-import { CreditCard, Banknote } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 import TextStep from '../components/TextStep';
+import PaymentStep from "../components/PaymentStep";
 
 // Changed to a plain array instead of a function
 export const WizardSteps = [
@@ -40,32 +41,10 @@ export const WizardSteps = [
         )
     },
     {
-        title: 'קישור לתשלום',
-        icon: <QrCode className="w-6 h-6"/>,
-        getContent: () => (
-            <div className="space-y-6 text-center">
-                <h3 className="text-2xl font-serif italic text-gray-800">בחר אפשרות תשלום</h3>
-                <div className="flex flex-col space-y-4">
-                    <a
-                        href="https://payment-link-1.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-4 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center"
-                    >
-                        <CreditCard className="w-6 h-6 mr-2"/>
-                        תשלום באשראי
-                    </a>
-                    <a
-                        href="https://payment-link-2.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-4 border-2 border-rose-500 text-rose-500 rounded-lg hover:bg-rose-50 transition-colors flex items-center justify-center"
-                    >
-                        <Banknote className="w-6 h-6 mr-2"/>
-                        העברה בנקאית
-                    </a>
-                </div>
-            </div>
+        title: 'תשלום',
+        icon: <CreditCard className="w-6 h-6" />,
+        getContent: (props) => (
+            <PaymentStep {...props} />
         )
     },
     {
