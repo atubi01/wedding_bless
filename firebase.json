@@ -1,0 +1,50 @@
+{
+  "rewrites": [
+    {
+      "source": "**",
+      "destination": "/index.html"
+    }
+  ],
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET, HEAD, POST, PUT, DELETE, OPTIONS"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Origin, Content-Type, Accept"
+          },
+          {
+            "key": "Access-Control-Max-Age",
+            "value": "3600"
+          }
+        ]
+      }
+    ]
+  },
+  "emulators": {
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData"
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

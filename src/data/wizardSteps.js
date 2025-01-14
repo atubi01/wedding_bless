@@ -1,5 +1,8 @@
 import React from 'react';
 import { QrCode, Type, Heart, Camera } from 'lucide-react';
+import CameraStep from '../components/CameraStep';
+import { CreditCard, Banknote } from 'lucide-react';
+import TextStep from '../components/TextStep';
 
 // Changed to a plain array instead of a function
 export const WizardSteps = [
@@ -7,58 +10,85 @@ export const WizardSteps = [
         title: 'ברוכים הבאים',
         icon: <Heart className="w-6 h-6" />,
         getContent: () => (
-            <div className="text-center space-y-6">
+            <div className="text-center space-y-8">
                 <div className="text-rose-500">
-                    <Heart className="w-16 h-16 mx-auto animate-pulse" />
+                    <img
+                        src={process.env.PUBLIC_URL + '/images/BnayaAndAviv.jpg'}
+                        alt="Wedding Welcome"
+                        className="w-64 h-64 mx-auto
+              border-8 border-white
+              shadow-lg
+              object-cover
+              transform rotate-3
+              hover:rotate-0 transition-transform duration-300"
+                        style={{
+                            boxShadow: '2px 3px 15px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1)'
+                        }}
+                    />
                 </div>
-                <h2 className="text-3xl font-serif italic text-gray-800">ברוכים הבאים ליום המיוחד שלנו</h2>
+                <h2
+                    className="text-5xl font-dancing-script text-gray-800 leading-relaxed"
+                    style={{
+                        fontFamily: "'Dancing Script', cursive",
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
+                    }}
+                >
+                    ברוכים הבאים ליום המיוחד שלנו
+                </h2>
                 <p className="text-gray-600 font-light text-lg">אנחנו שמחים שבחרתם להיות חלק מהחגיגה שלנו</p>
             </div>
         )
     },
     {
-        title: 'סריקת QR',
-        icon: <QrCode className="w-6 h-6" />,
+        title: 'קישור לתשלום',
+        icon: <QrCode className="w-6 h-6"/>,
         getContent: () => (
-            <div className="text-center space-y-4">
-                <div className="border-2 border-rose-200 rounded-lg p-12 mx-auto max-w-sm bg-pink-50">
-                    <QrCode className="w-16 h-16 mx-auto text-rose-400" />
-                    <p className="mt-4 text-gray-600 font-light">סרקו את קוד ה-QR שבהזמנה שלכם</p>
+            <div className="space-y-6 text-center">
+                <h3 className="text-2xl font-serif italic text-gray-800">בחר אפשרות תשלום</h3>
+                <div className="flex flex-col space-y-4">
+                    <a
+                        href="https://payment-link-1.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-4 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center"
+                    >
+                        <CreditCard className="w-6 h-6 mr-2"/>
+                        תשלום באשראי
+                    </a>
+                    <a
+                        href="https://payment-link-2.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-4 border-2 border-rose-500 text-rose-500 rounded-lg hover:bg-rose-50 transition-colors flex items-center justify-center"
+                    >
+                        <Banknote className="w-6 h-6 mr-2"/>
+                        העברה בנקאית
+                    </a>
                 </div>
             </div>
         )
     },
     {
         title: 'צילום תמונה',
-        icon: <Camera className="w-6 h-6" />,
-        getContent: ({ onImageCapture }) => (
-            <div className="space-y-4 text-center">
-                <div className="border-2 border-rose-200 rounded-lg p-12 mx-auto max-w-sm bg-pink-50">
-                    <Camera
-                        className="w-16 h-16 mx-auto text-rose-400 cursor-pointer"
-                        onClick={() => onImageCapture && onImageCapture()}
-                    />
-                    <p className="mt-4 text-gray-600 font-light">הנציחו את הרגע המיוחד</p>
-                </div>
-            </div>
+        icon: <Camera className="w-6 h-6"/>,
+        getContent: ({onImageCapture, formData}) => (
+            // <div className="space-y-4 text-center">
+            //     <div className="border-2 border-rose-200 rounded-lg p-12 mx-auto max-w-sm bg-pink-50">
+            //         <Camera
+            //             className="w-16 h-16 mx-auto text-rose-400 cursor-pointer"
+            //             onClick={() => onImageCapture && onImageCapture()}
+            //         />
+            //         <p className="mt-4 text-gray-600 font-light">הנציחו את הרגע המיוחד</p>
+            //     </div>
+            // </div>
+            <CameraStep onImageCapture={onImageCapture} initialImage={formData.picture}/>
         )
     },
     {
         title: 'הוספת ברכה',
         icon: <Type className="w-6 h-6" />,
         getContent: ({ formData, setFormData }) => (
-            <div className="space-y-4">
-                <div className="text-center mb-6">
-                    <h3 className="text-2xl font-serif italic text-gray-800">השאירו את ברכתכם</h3>
-                    <p className="text-gray-600 font-light">שתפו את המחשבות והאיחולים שלכם</p>
-                </div>
-                <textarea
-                    className="w-full p-6 border-2 border-rose-200 rounded-lg h-40 bg-pink-50 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 text-right"
-                    placeholder="כתבו את הברכה שלכם כאן..."
-                    value={formData.text}
-                    onChange={(e) => setFormData({ ...formData, text: e.target.value })}
-                />
-            </div>
+            <TextStep formData={formData} setFormData={setFormData} />
         )
     },
     {
