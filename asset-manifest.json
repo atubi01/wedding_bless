@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/wedding_bless/static/css/main.83e0352c.css",
-    "main.js": "/wedding_bless/static/js/main.60e698b5.js",
+    "main.js": "/wedding_bless/static/js/main.01f9e36b.js",
     "static/js/453.f42c44ff.chunk.js": "/wedding_bless/static/js/453.f42c44ff.chunk.js",
     "index.html": "/wedding_bless/index.html",
     "main.83e0352c.css.map": "/wedding_bless/static/css/main.83e0352c.css.map",
-    "main.60e698b5.js.map": "/wedding_bless/static/js/main.60e698b5.js.map",
+    "main.01f9e36b.js.map": "/wedding_bless/static/js/main.01f9e36b.js.map",
     "453.f42c44ff.chunk.js.map": "/wedding_bless/static/js/453.f42c44ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83e0352c.css",
-    "static/js/main.60e698b5.js"
+    "static/js/main.01f9e36b.js"
   ]
 }
