@@ -13,7 +13,7 @@ const PaymentStep = ({ setPaymentCompleted }) => {
         }
 
         // Replace with your Bit phone number
-        const phoneNumber = "YOUR_BIT_PHONE_NUMBER";
+        const phoneNumber = "0523191115";
         const bitLink = `bit://pay?phone=${phoneNumber}&amount=${amount}&note=${encodeURIComponent('תשלום לחתונה')}`;
 
         window.location.href = bitLink;
