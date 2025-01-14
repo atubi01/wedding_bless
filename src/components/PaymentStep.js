@@ -13,11 +13,10 @@ const PaymentStep = ({ setPaymentCompleted }) => {
         }
 
         // Replace with your Bit phone number
-        const phoneNumber = "0523191115";
-        const bitLink = `bit://pay?recipient=${phoneNumber}&amount=${amount}&note=${encodeURIComponent('תשלום לחתונה')}`;
+        const bitLink = `https://www.bitpay.co.il/app/me/C251D6A1-E747-F682-69CB-513E1BDD80F44344`;
 
         window.location.href = bitLink;
-        setIsProcessing(true);
+        setIsProcessing(false);
 
         // Set payment as completed
         // Note: In a real implementation, you would want to verify the payment was actually completed
@@ -28,7 +27,7 @@ const PaymentStep = ({ setPaymentCompleted }) => {
         <div className="max-w-md mx-auto p-6">
             <div className="text-center mb-8">
                 <img
-                    src="/images/bitLogo.png"
+                    src={process.env.PUBLIC_URL +'/images/bitLogo.png'}
                     alt="Bit"
                     className="h-12 mx-auto mb-4"
                 />
